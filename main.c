@@ -68,6 +68,9 @@ int main(void) {
         } else if (!strcmp(index1, "*")) {
             cross_vect(index0, index2);
         }
+
+        // error handling goes down here
+        
     }
     return 0;
 }
