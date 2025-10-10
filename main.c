@@ -8,6 +8,15 @@
 * Name: Dillon Fayas
 *
 * Compile: gcc main.c -o lab5
+*
+* Algorithm:
+* 1. Initialize an array to store vectors and a counter for the number of vectors.
+* 2. Enter an infinite loop to continuously prompt the user for input.
+* 3. Read the user input and parse it into components.
+* 4. Check for special commands like "quit", "help", "clear", and "list" and execute them.
+* 5. For vector operations, check if the operation is an assignment or a display operation.
+* 6. For assignment operations, check if the vector already exists. If it does, update it; if not, create a new vector.
+* 7. For display operations, check if the vector exists and perform the requested operation, displaying the result.
 */
 
 #include <stdio.h>
