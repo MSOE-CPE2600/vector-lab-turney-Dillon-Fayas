@@ -11,6 +11,8 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-
+void help();
+void list(vect vectors[], int num_vectors);
+void clear(vect vectors[], int num_vectors);
 
 #endif
