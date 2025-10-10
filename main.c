@@ -131,6 +131,7 @@ int main(int argc, char *argv[]) {
             char name[50] = "ans";
             print_vect(name, temporary_vector.x, temporary_vector.y, temporary_vector.z);
         }
+        printf("Error: Something went wrong\n");
     }
     
     return 0;
