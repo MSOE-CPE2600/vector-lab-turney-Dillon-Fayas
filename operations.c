@@ -28,6 +28,7 @@ vect new_vect(char name[50], float x, float y, float z) {
     temp.x = x;
     temp.y = y;
     temp.z = z;
+    print_vect(name, x, y, z);
     return temp;
 }
  

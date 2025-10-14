@@ -52,8 +52,8 @@ int main(int argc, char *argv[]) {
         vectors[i].z = 0;
     }
 
-    while (1) {
-        char index0[50] = "", index1[50] = "", index2[50] = "", index3[50] = "", index4[50] = "";
+    while (true) {
+        char index0[50] = "", index1[50] = "", index2[50] = "", index3[50] = "", index4[50] = "", index5[50] = "";
 
         printf("minimat> ");
         fgets(input, sizeof(input), stdin);
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
                 input[i] = ' ';
             }
         }
-        sscanf(input, "%s %s %s %s %s", index0, index1, index2, index3, index4);
+        sscanf(input, "%s %s %s %s %s %s", index0, index1, index2, index3, index4, index5);
 
         if (!strcmp(index0, "quit")) {
             return 0;
@@ -77,6 +77,24 @@ int main(int argc, char *argv[]) {
             continue;
         } else if (!strcmp(index0, "list")) {
             list(vectors, num_vectors);
+            continue;
+        }
+
+        if (index5[0] != '\0') {
+            printf("Error: Too many arguments\n");
+            continue;
+        } else if (index0[0] == '\0') {
+            // printf("Error: No input provided\n");
+            // Could tell the user that they entered nothing, but I prefer being able to drop some lines
+            continue;
+        } else if (index0[0] != '\0' && !strcmp(index1, "=") && (index2[0] == '\0' || index3[0] == '\0' || index4[0] == '\0')) {
+            printf("Error: Incomplete assignment\n");
+            continue;
+        } else if ((is_float(index0) || is_float(index2)) && strcmp(index1, "*") != 0 && strcmp(index1, "=") != 0) {
+            printf("Error: Invalid operation with scalar\n");
+            continue;
+        } else if (strcmp(index1, "=") == 0 && ((!is_float(index2) && find_vect(vectors, index2, SIZE) == -1) || (!is_float(index4) && find_vect(vectors, index4, SIZE) == -1))) {
+            printf("Error: Vector not found\n");
             continue;
         }
 
@@ -94,7 +112,6 @@ int main(int argc, char *argv[]) {
                 if (num_vectors < SIZE) {
                     if (assignment_vector_index != -1) {
                         vectors[assignment_vector_index] = new_vect(index0, atof(index2), atof(index3), atof(index4));
-                        num_vectors++;
                         continue;
                     }
                     vectors[num_vectors++] = new_vect(index0, atof(index2), atof(index3), atof(index4));
@@ -108,10 +125,16 @@ int main(int argc, char *argv[]) {
                 vect temporary_vector;
                 if (vector_1_index != -1 && vector_2_index == -1) {
                     temporary_vector = scalar_vect(vectors[vector_1_index], atof(index4));
+                } else if (vector_1_index == -1 && vector_2_index != -1) {
+                    temporary_vector = scalar_vect(vectors[vector_2_index], atof(index2));
                 } else {
                     temporary_vector = parse_operation(vectors, vector_1_index, index3, vector_2_index);
                 }
                 if (strcmp(temporary_vector.name, " ") == 0) {
+                    continue;
+                }
+                if (assignment_vector_index != -1) {
+                    vectors[assignment_vector_index] = new_vect(index0, temporary_vector.x, temporary_vector.y, temporary_vector.z);
                     continue;
                 }
                 vectors[num_vectors++] = new_vect(index0, temporary_vector.x, temporary_vector.y, temporary_vector.z);
@@ -120,11 +143,13 @@ int main(int argc, char *argv[]) {
             int vector_1_index = find_vect(vectors, index0, SIZE);
             int vector_2_index = find_vect(vectors, index2, SIZE);
             vect temporary_vector;
-                if (vector_1_index != -1 && vector_2_index == -1) {
-                    temporary_vector = scalar_vect(vectors[vector_1_index], atof(index2));
-                } else {
-                    temporary_vector = parse_operation(vectors, vector_1_index, index1, vector_2_index);
-                }
+            if (vector_1_index != -1 && vector_2_index == -1) {
+                temporary_vector = scalar_vect(vectors[vector_1_index], atof(index2));
+            } else if (vector_1_index == -1 && vector_2_index != -1) {
+                temporary_vector = scalar_vect(vectors[vector_2_index], atof(index0));
+            } else {
+                temporary_vector = parse_operation(vectors, vector_1_index, index1, vector_2_index);
+            }
             if (strcmp(temporary_vector.name, " ") == 0) {
                 continue;
             }
@@ -160,7 +185,6 @@ vect parse_operation(vect vectors[], int vector_1_index, char operation[50], int
     } else if (!strcmp(operation, "*")) {
         return cross_vect(vectors[vector_1_index], vectors[vector_2_index]);
     } else {
-        printf("Error: Invalid operation\n");
         return new_vect(" ", 0, 0, 0);
     }
 }
@@ -171,12 +195,14 @@ vect parse_operation(vect vectors[], int vector_1_index, char operation[50], int
 * @return true if the string is a float, false otherwise
 */
 bool is_float(char pattern[]) {
-    for (int i = 0; pattern[i] != '\0'; i++) {
-        if (pattern[i] < '0' || pattern[i] > '9') {
-            return false;
-        }
+    if (pattern == NULL || pattern[0] == '\0'){
+        return false;
     }
-    return true;
+
+    char *endptr;
+    strtof(pattern, &endptr);
+
+    return (*endptr == '\0');
 }
 
 /*

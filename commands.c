@@ -32,27 +32,28 @@ void clear(vect vectors[], int num_vectors) {
 void help() {
     printf("Vector Command Help Menu:\n");
     printf("Available commands:\n");
-    printf("\t<name> = <x> <y> <z>\t\tCreate a new vector with the given name and components.\n");
+    printf(" - <name> = <x> <y> <z>          ===   Create a new vector with the given name and components.\n");
 
-    printf("\nAssignment operations:\n");
-    printf("\t<name> = <name> + <name>\tAdd two vectors\n");
-    printf("\t<name> = <name> - <name>\tSubtract two vectors\n");
-    printf("\t<name> = <name> . <name>\tDot product of two vectors\n");
-    printf("\t<name> = <name> * <name>\tCross product of two vectors\n");
-    printf("\t<name> = <name> * <scalar>\tScale a vector\n");
+    printf("\nAssign Variables:\n");
+    printf(" - <name> = <name> + <name>      ===   Add two vectors\n");
+    printf(" - <name> = <name> - <name>      ===   Subtract two vectors\n");
+    printf(" - <name> = <name> . <name>      ===   Dot product of two vectors\n");
+    printf(" - <name> = <name> * <name>      ===   Cross product of two vectors\n");
+    printf(" - <name> = <name> * <scalar>    ===   Scale a vector\n");
 
-    printf("\nDisplay operations:\n");
-    printf("\t<name>\t\t\t\tView an existing vector\n");
-    printf("\t<name> + <name>\t\t\tAdd two vectors\n");
-    printf("\t<name> - <name>\t\t\tSubtract two vectors\n");
-    printf("\t<name> . <name>\t\t\tDot product of two vectors\n");
-    printf("\t<name> * <name>\t\t\tCross product of two vectors\n");
-    printf("\t<name> * <scalar>\t\tScale a vector\n");
+    printf("\nOperations:\n");
+    printf(" - <name>                        ===   View an existing vector\n");
+    printf(" - <name> + <name>               ===   Add two vectors\n");
+    printf(" - <name> - <name>               ===   Subtract two vectors\n");
+    printf(" - <name> . <name>               ===   Dot product of two vectors\n");
+    printf(" - <name> * <name>               ===   Cross product of two vectors\n");
+    printf(" - <name> * <scalar>             ===   Scale a vector\n");
+    printf(" - <scalar> * <name>             ===   Scale a vector\n");
 
-    printf("\nMiscellaneous operations:\n");
-    printf("\tclear\t\t\t\tClear all stored vectors\n");
-    printf("\tquit\t\t\t\tExit the program\n");
-    printf("\tlist\t\t\t\tList all stored vectors\n");
+    printf("\nHelper Commands:\n");
+    printf(" - clear                         ===   Clear all stored vectors\n");
+    printf(" - quit                          ===   Exit the program\n");
+    printf(" - list                          ===   List all stored vectors\n");
 
     printf("\nNote: Only spaces and commas are allowed as separators in commands\n\n");
 }
